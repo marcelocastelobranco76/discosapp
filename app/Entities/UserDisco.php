@@ -22,4 +22,9 @@ class UserDisco extends Model implements Transformable
      */
     protected $fillable = ['user_id','disco_id'];
 
+    public function discos()
+    {
+        return $this->hasMany('App\Entities\Disco');
+    }
+
 }

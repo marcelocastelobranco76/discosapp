@@ -23,9 +23,9 @@ class Disco extends Model implements Transformable
     protected $fillable = ['titulo','artista','ano'];
 
 
-    public function user()
+    public function userDisco()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Entities\UserDisco');
     }
 
 

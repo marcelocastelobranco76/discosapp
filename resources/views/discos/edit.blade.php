@@ -9,7 +9,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
                 <a href="{{ route('discos.index') }}"
                     class="inline-flex items-center px-4 py-2 mb-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-green-600 border border-transparent rounded-md hover:bg-green-500 active:bg-green-700 focus:outline-none focus:border-green-700 focus:shadow-outline-gray disabled:opacity-25">
-                    <- Go back
+                    <- Voltar
                 </a>
                 <form action="{{ route('discos.update', $disco->id) }}" method="POST">
                     @csrf

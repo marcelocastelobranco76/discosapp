@@ -13,7 +13,7 @@ class User_DiscoUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**

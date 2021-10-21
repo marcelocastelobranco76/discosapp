@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Auth;
+use DB;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\DiscoCreateRequest;
 use App\Http\Requests\DiscoUpdateRequest;
 use App\Repositories\DiscoRepository;
+use App\Repositories\UserDiscoRepository;
 use App\Validators\DiscoValidator;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class DiscosController.
@@ -21,8 +24,10 @@ class DiscosController extends Controller
 {
     /**
      * @var DiscoRepository
+     * @var UserDiscoRepository
      */
     protected $repository;
+    protected $repositoryUserDisco;
 
     /**
      * @var DiscoValidator
@@ -34,11 +39,15 @@ class DiscosController extends Controller
      *
      * @param DiscoRepository $repository
      * @param DiscoValidator $validator
+     * @param UserDiscoRepository $repository
      */
-    public function __construct(DiscoRepository $repository, DiscoValidator $validator)
+    public function __construct(DiscoRepository $repository, DiscoValidator $validator, UserDiscoRepository $repositoryUserDisco)
     {
         $this->repository = $repository;
+
         $this->validator  = $validator;
+
+        $this->repositoryUserDisco = $repositoryUserDisco;
     }
 
     /**
@@ -48,8 +57,21 @@ class DiscosController extends Controller
      */
     public function index()
     {
+
+        $userID = Auth::user()->id;
+
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $discos = $this->repository->all();
+
+        $discos = DB::table('users')
+        ->join('user_discos', 'user_discos.user_id', '=', 'users.id')
+        ->join('discos', 'user_discos.disco_id', '=', 'discos.id')
+        ->select('discos.id','discos.titulo','discos.artista', 'discos.ano', 'discos.created_at', 'discos.updated_at')
+        ->where('users.id','=', $userID)
+        ->paginate(2);
+
+        $this->repositoryUserDisco->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+
+        $userDisco = $this->repositoryUserDisco->all();
 
         if (request()->wantsJson()) {
 
@@ -78,14 +100,18 @@ class DiscosController extends Controller
     public function store(DiscoCreateRequest $request)
     {
 
-
-
-
         try {
+
+            $userID = Auth::user()->id;
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             $disco = $this->repository->create($request->all());
+
+            $discoIDCadastrado = $disco->id;
+
+            $userDisco = $this->repositoryUserDisco->create(['user_id'=>$userID,
+            'disco_id'=>$discoIDCadastrado]);
 
             $response = [
                 'message' => 'Disco created.',
