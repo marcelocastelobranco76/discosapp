@@ -18,7 +18,15 @@ class DiscoValidator extends LaravelValidator
      * @var array
      */
     protected $rules = [
-        ValidatorInterface::RULE_CREATE => [],
-        ValidatorInterface::RULE_UPDATE => [],
+
+        ValidatorInterface::RULE_CREATE =>
+        ['artista' => 'required',
+        'artista'  => 'required',
+        'ano'=> 'required | numeric | max:4'],
+
+        ValidatorInterface::RULE_UPDATE =>
+        ['titulo' => 'required',
+        'artista'  => 'required',
+        'ano'=> 'required | numeric'],
     ];
 }

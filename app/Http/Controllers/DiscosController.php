@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+Use Session;
 use Auth;
 use DB;
 use App\Http\Requests;
@@ -14,6 +15,7 @@ use App\Repositories\DiscoRepository;
 use App\Repositories\UserDiscoRepository;
 use App\Validators\DiscoValidator;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
 
 /**
  * Class DiscosController.
@@ -60,14 +62,37 @@ class DiscosController extends Controller
 
         $userID = Auth::user()->id;
 
+        $userIsAdmin = Auth::user()->isadmin;
+
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        $discos = DB::table('users')
-        ->join('user_discos', 'user_discos.user_id', '=', 'users.id')
-        ->join('discos', 'user_discos.disco_id', '=', 'discos.id')
-        ->select('discos.id','discos.titulo','discos.artista', 'discos.ano', 'discos.created_at', 'discos.updated_at')
-        ->where('users.id','=', $userID)
-        ->paginate(2);
+
+        if($userIsAdmin == 0) { /** Se o usuário logado não é admin **/
+
+              $discos = DB::table('users')
+              ->join('user_discos', 'user_discos.user_id', '=', 'users.id')
+              ->join('discos', 'user_discos.disco_id', '=', 'discos.id')
+              ->select('discos.id','discos.titulo','discos.artista', 'discos.ano', 'discos.created_at', 'discos.updated_at')
+              ->where('users.id','=', $userID)
+              ->paginate(10);
+        }
+
+
+        if($userIsAdmin == 1) { /** Se o usuário logado é admin **/
+
+              $discos = DB::table('users')
+              ->join('user_discos', 'user_discos.user_id', '=', 'users.id')
+              ->join('discos', 'user_discos.disco_id', '=', 'discos.id')
+              ->select('discos.id','discos.titulo','discos.artista', 'discos.ano', 'discos.created_at', 'discos.updated_at')
+              ->paginate(20);
+        }
+
+
+
+
+
+
+
 
         $this->repositoryUserDisco->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
@@ -235,7 +260,8 @@ class DiscosController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+
+       $deleted = $this->repository->delete($id);
 
         if (request()->wantsJson()) {
 

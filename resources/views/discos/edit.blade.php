@@ -15,6 +15,18 @@
                     @csrf
                     @method('PUT')
 
+                    <div class="mb-4">
+                        <label for="textartista"
+                            class="block mb-2 text-sm font-bold text-gray-700">Artista</label>
+                        <input type="text"
+                            class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                            name="artista"
+                            value="{{ $disco->artista }}"
+                            placeholder="Digite o nome do artista">
+                        @error('artista') <span class="text-red-500">{{ $message }}
+                        </span>@enderror
+                    </div>
+
                 <div class="mb-4">
                     <label for="texttitulo"
                         class="block mb-2 text-sm font-bold text-gray-700">Título</label>
@@ -22,30 +34,20 @@
                         class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                         name="titulo"
                         value="{{ $disco->titulo }}"
-                        placeholder="Digite o título do disco">
+                        placeholder="Digite o título do disco" >
                     @error('titulo') <span class="text-red-500">{{ $message }}
                     </span>@enderror
                 </div>
 
 
-                <div class="mb-4">
-                    <label for="textartista"
-                        class="block mb-2 text-sm font-bold text-gray-700">Artista</label>
-                    <input type="text"
-                        class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                        name="artista"
-                        value="{{ $disco->artista }}"
-                        placeholder="Digite o nome do artista">
-                    @error('artista') <span class="text-red-500">{{ $message }}
-                    </span>@enderror
-                </div>
+
 
                 <div class="mb-4">
                     <label for="textano"
                         class="block mb-2 text-sm font-bold text-gray-700">Ano</label>
                     <input type="text"
                         class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                        name="ano"
+                        name="ano"  maxlength="4"
                         value="{{ $disco->ano }}"
                         placeholder="Digite o ano de lançamento do disco">
                     @error('ano') <span class="text-red-500">{{ $message }}
@@ -57,7 +59,7 @@
                 <div>
                     <button type="submit"
                     class="inline-flex items-center px-4 py-2 my-3 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25">
-                        Save
+                        Salvar
                     </button>
                 </div>
                 </form>
