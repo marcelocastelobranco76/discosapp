@@ -20,7 +20,8 @@ class Disco extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = ['titulo','artista','ano','ano_edicao','selo','pais','formato','tipo','especificacoes'];
+    protected $fillable = ['titulo','artista','ano','ano_edicao'
+    ,'selo','pais','formato','tipo','especificacoes'];
 
     public function userDisco()
     {

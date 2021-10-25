@@ -57,50 +57,88 @@ class DiscosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $userID = Auth::user()->id;
+        $criterioPesquisa = $request->get('parametroPesquisa');
 
-        $userIsAdmin = Auth::user()->isadmin;
+                $userID = Auth::user()->id;
 
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+                $userIsAdmin = Auth::user()->isadmin;
+
+                $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+
+                if($userIsAdmin == 0) { /** Se o usuário logado não é admin **/
+
+                          if($criterioPesquisa == '') {
+                              $discos = DB::table('users')
+                              ->join('user_discos', 'user_discos.user_id', '=', 'users.id')
+                              ->join('discos', 'user_discos.disco_id', '=', 'discos.id')
+                              ->select('discos.id','discos.titulo','discos.artista', 'discos.ano', 'discos.created_at', 'discos.updated_at')
+                              ->where('users.id','=', $userID)
+                              ->paginate(2);
+                          }
+
+                          if($criterioPesquisa != '') {
+                              $discos = DB::table('users')
+                              ->join('user_discos', 'user_discos.user_id', '=', 'users.id')
+                              ->join('discos', 'user_discos.disco_id', '=', 'discos.id')
+                              ->select('discos.id','discos.titulo','discos.artista', 'discos.ano', 'discos.created_at', 'discos.updated_at')
+                              ->where('users.id','=', $userID)
+                              ->where('discos.titulo','LIKE', '%'.$criterioPesquisa.'%')
+                              ->orWhere('discos.artista','LIKE', '%'.$criterioPesquisa.'%')
+                              ->paginate(2);
+
+                              
+                          }
+
+                }
 
 
-        if($userIsAdmin == 0) { /** Se o usuário logado não é admin **/
+                if($userIsAdmin == 1) { /** Se o usuário logado é admin **/
 
-              $discos = DB::table('users')
-              ->join('user_discos', 'user_discos.user_id', '=', 'users.id')
-              ->join('discos', 'user_discos.disco_id', '=', 'discos.id')
-              ->select('discos.id','discos.titulo','discos.artista', 'discos.ano', 'discos.created_at', 'discos.updated_at')
-              ->where('users.id','=', $userID)
-              ->paginate(10);
-        }
+                      if($criterioPesquisa == '') {
+                                $discos = DB::table('users')
+                                ->join('user_discos', 'user_discos.user_id', '=', 'users.id')
+                                ->join('discos', 'user_discos.disco_id', '=', 'discos.id')
+                                ->select('discos.id','discos.titulo','discos.artista', 'discos.ano', 'discos.created_at', 'discos.updated_at')
+                                ->paginate(2);
+                      }
+
+                      if($criterioPesquisa != '') {
+                                $discos = DB::table('users')
+                                ->join('user_discos', 'user_discos.user_id', '=', 'users.id')
+                                ->join('discos', 'user_discos.disco_id', '=', 'discos.id')
+                                ->select('discos.id','discos.titulo','discos.artista', 'discos.ano', 'discos.created_at', 'discos.updated_at')
+                                ->where('discos.titulo','LIKE', '%'.$criterioPesquisa.'%')
+                                ->orWhere('discos.artista','LIKE', '%'.$criterioPesquisa.'%')
+                                ->paginate(2);
+                      }
 
 
-        if($userIsAdmin == 1) { /** Se o usuário logado é admin **/
-
-              $discos = DB::table('users')
-              ->join('user_discos', 'user_discos.user_id', '=', 'users.id')
-              ->join('discos', 'user_discos.disco_id', '=', 'discos.id')
-              ->select('discos.id','discos.titulo','discos.artista', 'discos.ano', 'discos.created_at', 'discos.updated_at')
-              ->paginate(20);
-        }
+                }
 
 
 
-        $this->repositoryUserDisco->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+                $this->repositoryUserDisco->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        $userDisco = $this->repositoryUserDisco->all();
+                $userDisco = $this->repositoryUserDisco->all();
 
-        if (request()->wantsJson()) {
 
-            return response()->json([
-                'data' => $discos,
-            ]);
-        }
+                if (request()->wantsJson()) {
 
-        return view('discos.index', compact('discos'));
+                    return response()->json([
+                        'data' => $discos,
+                    ]);
+                }
+
+
+                        return view('discos.index', compact('discos'));
+
+
+
+
+
     }
 
     public function create()

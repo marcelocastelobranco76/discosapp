@@ -1,6 +1,6 @@
 <?php
-
 use App\Http\Controllers\DiscosController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,8 +22,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
 
+Route::get('/usuarios', function () {
+    return view('users');
+})->middleware(['auth'])->name('usuario');
+
+require __DIR__.'/auth.php';
 
 
 Route::resource('discos', DiscosController::class)->middleware(['auth']);
