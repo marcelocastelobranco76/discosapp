@@ -89,11 +89,6 @@ class DiscosController extends Controller
 
 
 
-
-
-
-
-
         $this->repositoryUserDisco->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
         $userDisco = $this->repositoryUserDisco->all();

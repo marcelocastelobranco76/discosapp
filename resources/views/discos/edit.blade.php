@@ -44,15 +44,83 @@
 
                 <div class="mb-4">
                     <label for="textano"
-                        class="block mb-2 text-sm font-bold text-gray-700">Ano</label>
+                        class="block mb-2 text-sm font-bold text-gray-700">Ano de lançamento</label>
                     <input type="text"
                         class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                        name="ano"  maxlength="4"
+                        name="ano"
                         value="{{ $disco->ano }}"
                         placeholder="Digite o ano de lançamento do disco">
                     @error('ano') <span class="text-red-500">{{ $message }}
                     </span>@enderror
                 </div>
+
+
+
+                <div class="mb-4">
+                    <label for="textanoedicao"
+                        class="block mb-2 text-sm font-bold text-gray-700">Ano de lançamento da sua edição</label>
+                    <input type="text"
+                        class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        name="ano_edicao"
+                        value="{{ $disco->ano_edicao }}"
+                        placeholder="Digite o ano de lançamento da edição do seu disco">
+                    @error('ano_edicao') <span class="text-red-500">{{ $message }}
+                    </span>@enderror
+                </div>
+
+
+                <div class="mb-4">
+                    <label for="textano"
+                        class="block mb-2 text-sm font-bold text-gray-700">Selo</label>
+                    <input type="text"
+                        class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        name="selo"
+                        value="{{ $disco->selo }}"
+                        placeholder="Digite o selo do seu disco">
+                    @error('selo') <span class="text-red-500">{{ $message }}
+                    </span>@enderror
+                </div>
+
+
+                <div class="mb-4">
+                    <label for="textpais"
+                        class="block mb-2 text-sm font-bold text-gray-700">País onde foi lançada a cópia do seu disco</label>
+                    <input type="text"
+                        class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        name="pais"
+                        value="{{ $disco->pais }}"
+                        placeholder="Digite o país onde foi lançada sua cópia">
+                    @error('pais') <span class="text-red-500">{{ $message }}
+                    </span>@enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="textformato"
+                    class="block mb-2 text-sm font-bold text-gray-700">Formato (CD, LP, K7, DVD, etc.)</label>
+                    <textarea class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    name="formato">{{ $disco->formato }}</textarea>
+                    @error('formato') <span class="text-red-500">{{ $message }}
+                    </span>@enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="texttipo"
+                    class="block mb-2 text-sm font-bold text-gray-700">Tipo (álbum, coletânea, ao vivo, etc)</label>
+                    <textarea class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    name="tipo">{{ $disco->tipo }}</textarea>
+                    @error('tipo') <span class="text-red-500">{{ $message }}
+                    </span>@enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="textespecificacao"
+                    class="block mb-2 text-sm font-bold text-gray-700">Especificações da edição</label>
+                    <textarea class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    name="especificacoes">{{ $disco->especificacoes }}</textarea>
+                    @error('especificacoes') <span class="text-red-500">{{ $message }}
+                    </span>@enderror
+                </div>
+
 
 
 

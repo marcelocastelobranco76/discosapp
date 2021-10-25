@@ -23,9 +23,41 @@
                         </tr>
 
                         <tr>
-                            <td class="px-4 py-2 font-bold">Ano</td>
+                            <td class="px-4 py-2 font-bold">Ano de lançamento</td>
                             <td>{{ $disco->ano }}</td>
                         </tr>
+
+                        <tr>
+                            <td class="px-4 py-2 font-bold">Ano de lançamento da sua edição</td>
+                            <td>{{ $disco->ano_edicao }}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-4 py-2 font-bold">Selo</td>
+                            <td>{{ $disco->selo }}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-4 py-2 font-bold">País onde foi lançada a cópia do seu disco</td>
+                            <td>{{ $disco->pais }}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-4 py-2 font-bold">Formato (CD, LP, K7, DVD, etc.)</td>
+                            <td>{{ $disco->formato }}</td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="px-4 py-2 font-bold">Tipo (álbum, coletânea, ao vivo, etc)</td>
+                            <td>{{ $disco->tipo }}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-4 py-2 font-bold">Especificações da edição</td>
+                            <td>{{ $disco->especificacoes }}</td>
+                        </tr>
+
 
                         <tr>
                             <td class="px-4 py-2 font-bold">Cadastrado em</td>
