@@ -22,11 +22,26 @@ class DiscoValidator extends LaravelValidator
         ValidatorInterface::RULE_CREATE =>
         ['artista' => 'required',
         'artista'  => 'required',
-        'ano'=> 'required | numeric | max:4'],
+        'ano'=> 'required | numeric',
+        'ano_edicao'=> 'required | numeric',
+        'selo'  => 'required',
+        'pais'  => 'required',
+        'formato'  => 'required',
+        'tipo'  => 'required',
+        'especificacoes'  => 'required'
+      ],
 
         ValidatorInterface::RULE_UPDATE =>
         ['titulo' => 'required',
         'artista'  => 'required',
-        'ano'=> 'required | numeric'],
+        'ano'=> 'required | numeric',
+        'ano'=> 'required | numeric',
+        'ano_edicao'=> 'required | numeric',
+        'selo'  => 'required',
+        'pais'  => 'required',
+        'formato'  => 'required',
+        'tipo'  => 'required',
+        'especificacoes'  => 'required'
+      ],
     ];
 }
