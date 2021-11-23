@@ -89,7 +89,7 @@ class DiscosController extends Controller
                               ->orWhere('discos.artista','LIKE', '%'.$criterioPesquisa.'%')
                               ->paginate(2);
 
-                              
+
                           }
 
                 }
@@ -107,7 +107,7 @@ class DiscosController extends Controller
 
                       if($criterioPesquisa != '') {
                                 $discos = DB::table('users')
-                                ->join('user_discos', 'user_discos.user_id', '=', 'users.id')
+                                ->join('user_discos', 'user_disco.user_id', '=', 'users.id')
                                 ->join('discos', 'user_discos.disco_id', '=', 'discos.id')
                                 ->select('discos.id','discos.titulo','discos.artista', 'discos.ano', 'discos.created_at', 'discos.updated_at')
                                 ->where('discos.titulo','LIKE', '%'.$criterioPesquisa.'%')
@@ -216,14 +216,19 @@ class DiscosController extends Controller
     {
         $disco = $this->repository->find($id);
 
-        if (request()->wantsJson()) {
+        $userDisco = $this->repositoryUserDisco->all();
 
-            return response()->json([
-                'data' => $disco,
-            ]);
-        }
 
-        return view('discos.show', compact('disco'));
+        //if (request()->wantsJson()) {
+
+            // return response()->json([
+            //     'data' => [$disco,$usuario]
+            // ]);
+        //}
+
+        return view('discos.show', compact('disco','usuario'));
+
+
     }
 
     /**

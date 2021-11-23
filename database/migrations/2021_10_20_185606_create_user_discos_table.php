@@ -15,7 +15,7 @@ class CreateUserDiscosTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('user__discos', function(Blueprint $table) {
+		Schema::create('user_discos', function(Blueprint $table) {
             $table->increments('id');
 
             $table->timestamps();
