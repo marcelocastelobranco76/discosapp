@@ -14,15 +14,13 @@
                 <table class="w-full table-fixed">
                     <tbody>
 
-                @foreach($usuario as $row)
-
-                
+                    <?php foreach($userDisco as $key => $value) ?>
 
                       <tr>
                           <td class="px-4 py-2 font-bold">Cadastrado por</td>
-                          <td>{{ $row->name }}</td>
+                          <td>{{ $value->name }}</td>
                       </tr>
-                @endforeach
+
 
 
                         <tr>

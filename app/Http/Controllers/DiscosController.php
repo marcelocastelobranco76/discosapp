@@ -216,9 +216,6 @@ class DiscosController extends Controller
     {
         $disco = $this->repository->find($id);
 
-        $userDisco = $this->repositoryUserDisco->all();
-
-
         //if (request()->wantsJson()) {
 
             // return response()->json([
@@ -226,7 +223,16 @@ class DiscosController extends Controller
             // ]);
         //}
 
-        return view('discos.show', compact('disco','usuario'));
+        $userDisco = DB::table('users')
+        ->join('user_discos', 'user_discos.user_id', '=', 'users.id')
+        ->join('discos', 'user_discos.disco_id', '=', 'discos.id')
+        ->select('discos.id','discos.titulo','discos.artista', 'discos.ano'
+        , 'discos.created_at', 'discos.updated_at','users.name')
+        ->where('discos.id','=', $id)->get();
+
+        
+
+        return view('discos.show', compact('disco','userDisco'));
 
 
     }
